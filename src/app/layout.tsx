@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "MoneyTracker | Personal Finance",
   description: "Track your wallets, transactions, and savings with ease.",
