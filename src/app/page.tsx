@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AddTransactionDialog } from "@/components/transactions/AddTransactionDialog";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const [wallets, recentTransactions, summary, categoriesResult, profile] = await Promise.all([
     getWallets(),

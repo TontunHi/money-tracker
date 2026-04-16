@@ -1,6 +1,17 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Config options
+  webpack: (config) => {
+    // Explicitly handle webpack if needed since the user used --webpack flag
+    return config;
+  }
+};
+
+export default nextConfig;
+
+/*
 import withPWAInit from "next-pwa";
 
-/** @type {import('next').NextConfig} */
 const withPWA = withPWAInit({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
@@ -8,8 +19,5 @@ const withPWA = withPWAInit({
   skipWaiting: true,
 });
 
-const nextConfig = {
-  // Config options
-};
-
 export default withPWA(nextConfig);
+*/
