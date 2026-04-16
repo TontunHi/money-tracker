@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MoneyTracker - Personal Finance & Multi-Wallet Tracker
 
-## Getting Started
+A high-quality, production-ready web application built with Next.js 14, Drizzle ORM, and NeonDB.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Multi-Wallet System**: Manage multiple wallets (Cash, Bank, Savings, Credit Card) with separate balances.
+- **Flexible Transactions**: Support for Income, Expense, and Transfer between wallets.
+- **Real-time Balance Updates**: Wallet balances are automatically adjusted based on transactions.
+- **Modern UI/UX**: Minimalist Glassmorphism design with smooth transitions and animations.
+- **Responsive Dashboard**: Overview of total balance, monthly summaries, and recent activity.
+- **PWA Support**: Installable on mobile and works offline.
+- **Back-dating**: Full control over transaction dates with a modern date picker.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **UI Components**: shadcn/ui, Lucide React, Framer Motion
+- **Database**: NeonDB (PostgreSQL) with Drizzle ORM
+- **Validation**: Zod
+- **PWA**: next-pwa
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup Instructions
 
-## Learn More
+1. **Clone the repository**:
+   ```bash
+   git clone <repo-url>
+   cd money-tracker
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Configure Environment Variables**:
+   Create a `.env` file in the root directory and add your NeonDB connection string:
+   ```env
+   DATABASE_URL=postgresql://your-user:your-password@your-host/neondb?sslmode=require
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Initialize Database**:
+   Run the reset script to drop existing tables (if any) and push the new schema:
+   ```bash
+   npm run db:reset
+   ```
 
-## Deploy on Vercel
+5. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Key Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev`: Start the development server.
+- `npm run build`: Build the application for production.
+- `npm run db:push`: Push local schema changes to the database.
+- `npm run db:reset`: Clear all data and re-initialize the database schema.
+- `npm run db:studio`: Open Drizzle Studio to explore your data visually.
+
+## Folder Structure
+
+- `/src/app`: Routing and page components.
+- `/src/components/layout`: Shell and navigation.
+- `/src/components/transactions`: Transaction forms and lists.
+- `/src/components/ui`: Reusable shadcn/ui components.
+- `/src/lib/actions`: Server Actions for business logic.
+- `/src/lib/db`: Database schema and configuration.
+- `/src/lib/validations`: Zod validation schemas.
+- `/scripts`: Database maintenance scripts.
