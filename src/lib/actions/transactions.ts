@@ -108,5 +108,10 @@ export async function getTransactionSummary() {
     totalExpense: sql<number>`SUM(CASE WHEN type = 'EXPENSE' THEN amount ELSE 0 END)`,
   }).from(transactions);
 
-  return result[0];
+  const summary = result[0] || { totalIncome: 0, totalExpense: 0 };
+  
+  return {
+    totalIncome: Number(summary.totalIncome || 0),
+    totalExpense: Number(summary.totalExpense || 0),
+  };
 }

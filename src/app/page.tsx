@@ -18,13 +18,30 @@ export default async function DashboardPage() {
     getProfile()
   ]);
 
+  const plainWallets = wallets.map(w => ({
+    id: w.id,
+    name: w.name,
+    type: w.type,
+    balance: Number(w.balance),
+    color: w.color,
+    icon: w.icon,
+  }));
+
   let categories = categoriesResult;
   if (categories.length === 0) {
     await seedDefaults();
     categories = await getCategories();
   }
 
-  const totalBalance = wallets.reduce((acc, wallet) => acc + Number(wallet.balance), 0);
+  const plainCategories = categories.map(c => ({
+    id: c.id,
+    name: c.name,
+    type: c.type,
+    color: c.color,
+    icon: c.icon,
+  }));
+
+  const totalBalance = plainWallets.reduce((acc, wallet) => acc + wallet.balance, 0);
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -40,7 +57,7 @@ export default async function DashboardPage() {
               Insights
             </Link>
           </Button>
-          <AddTransactionDialog wallets={wallets} categories={categories} />
+          <AddTransactionDialog wallets={plainWallets} categories={plainCategories} />
         </div>
       </div>
 
@@ -57,7 +74,7 @@ export default async function DashboardPage() {
             <div className="text-3xl font-bold tracking-tight">${totalBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
             <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-              across {wallets.length} active wallets
+              across {plainWallets.length} active wallets
             </p>
           </CardContent>
         </Card>
@@ -70,7 +87,7 @@ export default async function DashboardPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-emerald-500 tracking-tight">+${(Number(summary.totalIncome) || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
+            <div className="text-3xl font-bold text-emerald-500 tracking-tight">+${summary.totalIncome.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
             <p className="text-xs text-muted-foreground mt-1">
               This month's earnings
             </p>
@@ -85,7 +102,7 @@ export default async function DashboardPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-rose-500 tracking-tight concert">-${(Number(summary.totalExpense) || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
+            <div className="text-3xl font-bold text-rose-500 tracking-tight">-${summary.totalExpense.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
             <p className="text-xs text-muted-foreground mt-1">
               This month's spending
             </p>
@@ -104,7 +121,7 @@ export default async function DashboardPage() {
           </div>
           
           <div className="grid gap-6 sm:grid-cols-2">
-            {wallets.map((wallet) => (
+            {plainWallets.map((wallet) => (
               <Card key={wallet.id} className="relative overflow-hidden group hover:shadow-2xl transition-all duration-500 border-none glass-card">
                 <div 
                   className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 rounded-full blur-3xl opacity-20 transition-opacity group-hover:opacity-40" 
@@ -122,7 +139,7 @@ export default async function DashboardPage() {
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="text-sm text-muted-foreground font-medium mb-1">{wallet.name}</div>
-                  <div className="text-2xl font-bold tracking-tight">${Number(wallet.balance).toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
+                  <div className="text-2xl font-bold tracking-tight">${wallet.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
                 </CardContent>
                 <div className="h-1.5 w-full bg-secondary/30 absolute bottom-0">
                   <div 

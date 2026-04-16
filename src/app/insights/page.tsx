@@ -5,11 +5,31 @@ import { HealthMetrics } from "@/components/insights/HealthMetrics";
 import { Sparkles } from "lucide-react";
 
 export default async function InsightsPage() {
-  const [categoryData, trendData, metrics] = await Promise.all([
+  const [categoryDataResult, trendDataResult, metricsResult] = await Promise.all([
     getCategoryDistribution(),
     getMonthlyTrendData(),
     getFinancialMetrics(),
   ]);
+
+  const categoryData = categoryDataResult.map(c => ({
+    name: c.name,
+    value: Number(c.value),
+    color: c.color,
+  }));
+
+  const trendData = trendDataResult.map(t => ({
+    date: t.date,
+    income: Number(t.income),
+    expense: Number(t.expense),
+  }));
+
+  const metrics = {
+    ...metricsResult,
+    totalIncome: Number(metricsResult.totalIncome),
+    totalExpense: Number(metricsResult.totalExpense),
+    totalSaved: Number(metricsResult.totalSaved),
+    savingsRate: Number(metricsResult.savingsRate),
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
