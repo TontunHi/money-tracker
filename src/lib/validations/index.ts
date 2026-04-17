@@ -12,11 +12,11 @@ export const walletSchema = z.object({
 });
 
 export const transactionSchema = z.object({
-  walletId: z.string().uuid("Invalid wallet ID"),
-  toWalletId: z.string().uuid("Invalid wallet ID").optional(),
-  categoryId: z.string().uuid("Invalid category ID").optional(),
+  walletId: z.string().uuid("Please select a wallet"),
+  toWalletId: z.string().uuid("Please select a destination wallet").optional().or(z.literal("")).transform(v => v === "" ? undefined : v),
+  categoryId: z.string().uuid("Please select a category").optional().or(z.literal("")).transform(v => v === "" ? undefined : v),
   type: transactionTypeSchema,
-  amount: z.string().regex(/^\d+(\.\d{1,2})?$/, "Invalid amount format"),
+  amount: z.string().min(1, "Amount is required").regex(/^\d+(\.\d{1,2})?$/, "Invalid amount format"),
   description: z.string().max(200).optional(),
   date: z.date(),
 });

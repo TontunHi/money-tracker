@@ -45,13 +45,14 @@ export function AddTransactionDialog({ wallets, categories, trigger }: Props) {
   async function onSubmit(values: any) {
     setLoading(true);
     try {
+      console.log("Submitting transaction:", values);
       await createTransaction(values);
       toast.success("Transaction created successfully");
       setOpen(false);
       form.reset();
-    } catch (error) {
-      toast.error("Failed to create transaction");
-      console.error(error);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to create transaction");
+      console.error("Transaction submission error:", error);
     } finally {
       setLoading(false);
     }
